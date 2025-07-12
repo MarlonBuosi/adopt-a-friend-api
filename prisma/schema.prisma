@@ -15,31 +15,32 @@ datasource db {
 }
 
 model Org {
-  id        String   @id @default(uuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  phone     String
-  Pet       Pet[]
+  id            String   @id @default(uuid())
+  name          String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  phone         String
+  password_hash String
+  pets          Pet[]
 
   @@map("orgs")
 }
 
 model Pet {
-  id        String   @id @default(uuid())
-  name      String
-  species   String
-  color     String
-  weight    Float?
-  height    Float?
-  age       Int?
-  orgId     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  city      String
+  id         String   @id @default(uuid())
+  name       String
+  species    String
+  color      String
+  weight     Float?
+  height     Float?
+  age        Int?
+  org_id     String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  city       String
 
-  org Org @relation(fields: [orgId], references: [id])
+  org Org @relation(fields: [org_id], references: [id])
 
-  @@index([orgId], name: "idx_pets_org_id")
+  @@index([org_id], name: "idx_pets_org_id")
   @@map("pets")
 }
