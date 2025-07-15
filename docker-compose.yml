@@ -1,7 +1,5 @@
-version: '3'
-
 services:
-  find-a-friend-pg:
+  adopt-a-friend-api:
     image: bitnami/postgresql
     ports:
       - 5432:5432
