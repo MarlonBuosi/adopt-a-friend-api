@@ -6,7 +6,9 @@
   "scripts": {
     "start:dev": "tsx watch src/server.ts",
     "start": "node build/server.js",
-    "build": "tsup src --out-dir build"
+    "build": "tsup src --out-dir build",
+    "migrate:dev": "prisma migrate dev",
+    "docker:dev": "docker compose up -d"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +24,7 @@
     "typescript-eslint": "8.36.0"
   },
   "dependencies": {
+    "@prisma/client": "6.11.1",
     "dotenv": "16.4.5",
     "fastify": "^4.28.1",
     "prisma": "6.11.1",
