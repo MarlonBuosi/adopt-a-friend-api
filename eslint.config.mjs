@@ -3,10 +3,24 @@ import tseslint from 'typescript-eslint';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
+  // Ignore node_modules and build output
   {
-  ...tseslint.configs.recommended,
-    
     ignores: ['node_modules/**', 'dist/**', 'build/**'],
+  },
+
+  // TypeScript files only
+  {
+    files: ['**/*.{ts,tsx,mts,cts}'],
+    ...tseslint.configs.recommended,
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        project: './tsconfig.json',
+      },
+      globals: globals.node,
+    },
     rules: {
       // Style
       semi: ['error', 'always'],
@@ -26,16 +40,6 @@ export default defineConfig([
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       '@typescript-eslint/no-inferrable-types': 'off',
-    },
-    files: ['**/*.{ts,tsx,mts,cts}'],
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        project: './tsconfig.json',
-      },
-      globals: globals.node,
     },
   },
 ]);
