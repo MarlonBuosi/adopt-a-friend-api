@@ -1,5 +1,6 @@
 import { hash } from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { PrismaOrgsRepository } from "@/repositories/prisma-orgs-repository";
 
 interface IRegisterUseCase {
   name: string;
@@ -18,7 +19,10 @@ export async function registerUseCase({name, password, phone}:IRegisterUseCase){
       throw new Error('Organization already exists');
     }
   
-    await prisma.org.create({
-      data: { name, phone, password_hash }
-    });
+    const prismaUserRepository = new PrismaOrgsRepository();
+    await prismaUserRepository.create({
+      name,
+      phone,
+      password_hash
+    })
 }
