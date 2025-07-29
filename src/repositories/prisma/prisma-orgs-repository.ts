@@ -10,4 +10,12 @@ export class PrismaOrgsRepository implements IOrgsRepository {
 
     return user
   }
+
+  async findByEmail(name: string) {
+    const user = await prisma.org.findUnique({
+      where: { name }
+    });
+
+    return user
+  }
 }
