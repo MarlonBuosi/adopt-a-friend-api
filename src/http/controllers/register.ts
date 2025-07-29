@@ -2,9 +2,9 @@ import { z } from "zod";
 import { registerUseCase } from "@/use-cases/register";
 import { FastifyReply, FastifyRequest } from "fastify";
 
-export async function register (request: FastifyRequest, reply: FastifyReply) {
+export async function register(request: FastifyRequest, reply: FastifyReply) {
   const registerBodySchema = z.object({
-    name: z.string(), 
+    name: z.string(),
     phone: z.string(),
     password: z.string().min(6)
   })
@@ -13,9 +13,9 @@ export async function register (request: FastifyRequest, reply: FastifyReply) {
 
   try {
     await registerUseCase({ name, phone, password });
-  } catch (error) {
+  } catch {
     return reply.status(409).send();
-  } 
-  
+  }
+
   return reply.status(201).send({ message: 'Organization created successfully' });
 }
