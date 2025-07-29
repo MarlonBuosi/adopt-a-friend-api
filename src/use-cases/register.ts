@@ -8,30 +8,22 @@ interface IRegisterUseCase {
   password: string;
 }
 
-export async function registerUseCase({ name, password, phone }: IRegisterUseCase) {
-  const password_hash = await hash(password, 6);
+export class RegisterUseCase {
+  constructor(private orgsRepository: IOrgsRepository) { }
 
-  const orgExists = await prisma.org.findUnique({
-    where: { name }
-  });
+  async execute({ name, password, phone }: IRegisterUseCase) {
+    const password_hash = await hash(password, 6);
 
-  const orgExists = await this.orgsRepository.findByEmail(name);
+    const orgExists = await this.orgsRepository.findByEmail(name);
 
-  if (orgExists) {
-    throw new OrgAlreadyExistsError()
+    if (orgExists) {
+      throw new OrgAlreadyExistsError()
+    }
+
+    await this.orgsRepository.create({
+      name,
+      phone,
+      password_hash
+    })
   }
-
-  await this.orgsRepository.create({
-    name,
-    phone,
-    password_hash
-  })
-}
-
-const prismaUserRepository = new PrismaOrgsRepository();
-await prismaUserRepository.create({
-  name,
-  phone,
-  password_hash
-})
 }
