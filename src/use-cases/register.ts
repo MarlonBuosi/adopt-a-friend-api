@@ -19,7 +19,7 @@ export class RegisterUseCase {
   async execute({ name, password, phone }: IRegisterUseCase): Promise<IRegisterUseCaseResponse> {
     const password_hash = await hash(password, 6);
 
-    const orgExists = await this.orgsRepository.findByEmail(name);
+    const orgExists = await this.orgsRepository.findByName(name);
 
     if (orgExists) {
       throw new OrgAlreadyExistsError()

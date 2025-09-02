@@ -19,7 +19,7 @@ export class InMemoryOrgsRepository implements IOrgsRepository {
     return org;
   }
 
-  async findByEmail(name: string) {
+  async findByName(name: string) {
     const org = this.items.find(item => item.name === name);
 
     if (!org) {
