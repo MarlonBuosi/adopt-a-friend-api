@@ -18,4 +18,12 @@ export class PrismaOrgsRepository implements IOrgsRepository {
 
     return user
   }
+
+  async findById(id: string) {
+    const org = await prisma.org.findUnique({
+      where: { id }
+    });
+
+    return org
+  }
 }
