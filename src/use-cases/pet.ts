@@ -2,7 +2,6 @@ import { Pet } from "@prisma/client";
 import { IPetsRepository } from "@/repositories/pets-repository";
 
 interface IPetUseCase {
-  id: string;
   name: string;
   species: string
   color: string;
@@ -10,6 +9,7 @@ interface IPetUseCase {
   height: number;
   age: number;
   city: string;
+  orgId: string;
 }
 
 interface IPetUseCaseResponse {
@@ -19,7 +19,7 @@ interface IPetUseCaseResponse {
 export class PetUseCase {
   constructor(private petsRepository: IPetsRepository) { }
 
-  async execute({ id, age, city, color, height, name, species, weight }: IPetUseCase): Promise<IPetUseCaseResponse> {
+  async execute({ age, city, color, height, name, species, weight, orgId }: IPetUseCase): Promise<IPetUseCaseResponse> {
 
     const pet = await this.petsRepository.create({
       name,
@@ -29,7 +29,7 @@ export class PetUseCase {
       height,
       age,
       city,
-      org: { connect: { id } },
+      org_id: orgId
     })
 
     return { pet }
