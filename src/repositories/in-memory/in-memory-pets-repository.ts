@@ -41,7 +41,7 @@ export class InMemoryPetsRepository implements IPetsRepository {
     return pets
   }
 
-  async searchMany() {
+  async fetchMany() {
     const pets = this.items;
 
     return pets
