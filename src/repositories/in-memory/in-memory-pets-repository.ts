@@ -34,4 +34,16 @@ export class InMemoryPetsRepository implements IPetsRepository {
 
     return pet;
   }
+
+  async searchManyByCity(city: string) {
+    const pets = this.items.filter(pet => pet.city.toLocaleLowerCase() === city.toLocaleLowerCase());
+
+    return pets
+  }
+
+  async searchMany() {
+    const pets = this.items;
+
+    return pets
+  }
 }
