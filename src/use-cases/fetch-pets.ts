@@ -10,7 +10,7 @@ export class FetchPetsUseCase {
   constructor(private petsRepository: IPetsRepository) { }
 
   async execute(): Promise<FetchPetsUseCaseResponse> {
-    const pets = await this.petsRepository.searchMany();
+    const pets = await this.petsRepository.fetchMany();
 
     if (pets === null) {
       throw new ResourceNotFoundError()
