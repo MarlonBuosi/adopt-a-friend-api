@@ -12,8 +12,6 @@ describe('Get Pet Use Case', () => {
   })
 
   it('should find a pet with a pet id', async () => {
-
-
     const pet = await inMemoryPetsRepository.create({
       age: 3,
       city: 'New York',
