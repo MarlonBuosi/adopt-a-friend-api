@@ -1,5 +1,5 @@
 import { Prisma, Pet } from "@prisma/client";
-import { IPetsRepository } from "../pets-repository";
+import { IPetsRepository, TPet } from "../pets-repository";
 import { randomUUID } from "crypto";
 
 export class InMemoryPetsRepository implements IPetsRepository {
@@ -43,6 +43,18 @@ export class InMemoryPetsRepository implements IPetsRepository {
 
   async fetchMany() {
     const pets = this.items;
+
+    return pets
+  }
+
+
+  async filterByCharacteristics(characteristics: TPet ) {
+    const pets = this.items.filter(pet => {
+      const hasChar = Object.entries(characteristics).some(([key, value]) => {
+        return pet[key as keyof Pet] === value
+      })
+      return hasChar
+    })
 
     return pets
   }
