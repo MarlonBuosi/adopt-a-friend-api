@@ -14,13 +14,17 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
   try {
     const authenticationUseCase = makeAuthenticateUseCase();
 
-    await authenticationUseCase.execute({ name, password });
+    const { org } = await authenticationUseCase.execute({ name, password });
+    const token = await reply.jwtSign({}, {sign: {sub: org.id}})
+
+    return reply.status(200).send({
+      token
+    });
+
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
       return reply.status(400).send({ message: err.message });
     }
     return reply.status(500).send({ message: 'Internal Server Error' });
   }
-
-  return reply.status(200).send();
 }
