@@ -32,7 +32,7 @@ describe('Authenticate Use Case', () => {
 
   it('should not be able to authenticate with wrong name', async () => {
 
-    expect(() =>
+    await expect(() =>
       sut.execute({
         name: 'Nonexistent Org',
         password: 'password123'
@@ -48,7 +48,7 @@ describe('Authenticate Use Case', () => {
       phone: '1234567890'
     })
 
-    expect(() =>
+    await expect(() =>
       sut.execute({
         name: 'Nonexistent Org',
         password: 'batman123'
