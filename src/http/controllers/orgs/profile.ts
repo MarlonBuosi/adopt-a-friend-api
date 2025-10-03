@@ -10,7 +10,7 @@ export async function profile(request: FastifyRequest, reply: FastifyReply) {
   })
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { password_hash: _, ...orgWithoutPasswordHash } = org
+  const { password_hash: _, ...organization } = org
 
-  return reply.status(200).send({ orgWithoutPasswordHash });
+  return reply.status(200).send({ organization });
 }

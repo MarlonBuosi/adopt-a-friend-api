@@ -5,9 +5,9 @@ interface IPetUseCase {
   name: string;
   species: string
   color: string;
-  weight: number;
-  height: number;
-  age: number;
+  weight: number | null
+  height: number | null;
+  age: number | null;
   city: string;
   orgId: string;
 }
