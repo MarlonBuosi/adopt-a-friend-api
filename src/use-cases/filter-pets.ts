@@ -1,11 +1,10 @@
 import { Pet } from "@prisma/client";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { IPetsRepository } from "@/repositories/pets-repository";
+import { IPetsRepository, TSearchPets } from "@/repositories/pets-repository";
 
-type TPet = Partial<Pick<Pet, "name" | "age" | "weight" | "height" | "color" | "species" | "city">>
 
 interface FilterPetsUseCaseRequest {
-  characteristics: TPet;
+  characteristics: TSearchPets;
 }
 
 interface FilterPetsUseCaseResponse {

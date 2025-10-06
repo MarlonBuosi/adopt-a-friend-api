@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { IPetsRepository, TPet } from "../pets-repository";
+import { IPetsRepository, TSearchPets } from "../pets-repository";
 import { prisma } from "@/lib/prisma";
 
 export class PrismaPetsRepository implements IPetsRepository {
@@ -19,9 +19,17 @@ export class PrismaPetsRepository implements IPetsRepository {
     return pet
   }
 
-  async searchManyByCity(city: string)  {
+  async searchMany(searchParams: TSearchPets)  {
     const pets = await prisma.pet.findMany({
-      where: { city }
+      where: { 
+        city: searchParams.city,
+        name: searchParams.name,
+        species: searchParams.species,
+        color: searchParams.color,
+        weight: searchParams.weight,
+        height: searchParams.height,
+        age: searchParams.age,
+      }
     })
 
     return pets
@@ -33,7 +41,7 @@ export class PrismaPetsRepository implements IPetsRepository {
     return pets
   }
 
-  async filterByCharacteristics(characteristics: TPet)  {
+  async filterByCharacteristics(characteristics: TSearchPets)  {
     const pets = await prisma.pet.findMany({
       where: { ...characteristics }
     })
