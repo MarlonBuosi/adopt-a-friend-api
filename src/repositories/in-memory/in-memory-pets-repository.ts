@@ -1,5 +1,5 @@
 import { Prisma, Pet } from "@prisma/client";
-import { IPetsRepository, TPet } from "../pets-repository";
+import { IPetsRepository, TSearchPets } from "../pets-repository";
 import { randomUUID } from "crypto";
 
 export class InMemoryPetsRepository implements IPetsRepository {
@@ -35,8 +35,13 @@ export class InMemoryPetsRepository implements IPetsRepository {
     return pet;
   }
 
-  async searchManyByCity(city: string) {
-    const pets = this.items.filter(pet => pet.city.toLocaleLowerCase() === city.toLocaleLowerCase());
+  async searchMany(searchParams: TSearchPets) {
+    const pets = this.items.filter(pet => {
+      const hasChar = Object.entries(searchParams).some(([key, value]) => {
+        return pet[key as keyof Pet] === value
+      })
+      return hasChar
+    })
 
     return pets
   }
@@ -48,7 +53,7 @@ export class InMemoryPetsRepository implements IPetsRepository {
   }
 
 
-  async filterByCharacteristics(characteristics: TPet ) {
+  async filterByCharacteristics(characteristics: TSearchPets ) {
     const pets = this.items.filter(pet => {
       const hasChar = Object.entries(characteristics).some(([key, value]) => {
         return pet[key as keyof Pet] === value

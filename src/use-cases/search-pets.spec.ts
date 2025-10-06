@@ -34,7 +34,7 @@ describe('Search Pets Use Case', () => {
       org_id: 'org-123'
     })
 
-    const { pets }  = await sut.execute({ city: 'New York' })
+    const { pets }  = await sut.execute({ searchParams: { city: 'Curitiba', name: 'Buddy' } });
 
     expect(pets).toHaveLength(2);
   })
