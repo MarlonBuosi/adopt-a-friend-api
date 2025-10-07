@@ -3,7 +3,8 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { InvalidCredentialsError } from "@/use-cases/errors/invalid-credentials-error";
 import { makeSearchPetsUseCase } from "@/use-cases/factories/make-search-pets-use-case";
 
-export async function create(request: FastifyRequest, reply: FastifyReply) {
+export async function search(request: FastifyRequest, reply: FastifyReply) {
+
   const searchPetQuerySchema = z.object({
     searchParams: z.object({
       city: z.string(),
@@ -15,7 +16,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       age: z.number().optional(),
   })});
 
-  const { searchParams} = searchPetQuerySchema.parse(request.body);
+  const { searchParams } = searchPetQuerySchema.parse(request.body);
 
   try {
     const searchPetsUseCase = makeSearchPetsUseCase();
