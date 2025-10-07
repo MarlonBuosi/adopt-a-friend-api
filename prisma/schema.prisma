@@ -20,6 +20,7 @@ model Org {
   updated_at    DateTime @updatedAt
   phone         String
   password_hash String
+  city          String
   pets          Pet[]
 
   @@map("orgs")
@@ -36,7 +37,6 @@ model Pet {
   org_id     String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  city       String
 
   org Org @relation(fields: [org_id], references: [id])
 

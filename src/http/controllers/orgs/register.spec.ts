@@ -19,7 +19,8 @@ describe('Register (e2e)', () => {
       {
         name: 'Atila Org',
         phone: '11999999999',
-        password: '123456789'
+        password: '123456789',
+        city: 'Curitiba',
       }
     )
 
