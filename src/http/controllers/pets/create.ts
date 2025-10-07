@@ -7,7 +7,6 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createBodySchema = z.object({
     name: z.string(),
     age: z.number().nullable(),
-    city: z.string(),
     color: z.string(),
     height:   z.number().nullable(),
     species: z.string(),
@@ -15,12 +14,12 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     orgId: z.string(),
   })
 
-  const { name,age, city, color, height, orgId, species, weight } = createBodySchema.parse(request.body);
+  const { name,age, color, height, orgId, species, weight } = createBodySchema.parse(request.body);
 
   try {
     const petUseCase = makePetUseCase();
 
-    const { pet } = await petUseCase.execute({ name, age, city, color, height, species, weight, orgId });
+    const { pet } = await petUseCase.execute({ name, age, color, height, species, weight, orgId });
 
     return reply.status(201).send({
       pet
