@@ -14,7 +14,6 @@ describe('Search Pets Use Case', () => {
   it('should fetch pets', async () => {
     await inMemoryPetsRepository.create({
       age: 3,
-      city: 'New York',
       color: 'Brown',
       height: 50,
       name: 'Buddy',
@@ -25,7 +24,6 @@ describe('Search Pets Use Case', () => {
 
     await inMemoryPetsRepository.create({
       age: 3,
-      city: 'New York',
       color: 'Brown',
       height: 50,
       name: 'Buddy',
