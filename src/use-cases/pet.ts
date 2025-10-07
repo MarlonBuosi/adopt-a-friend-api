@@ -8,7 +8,6 @@ interface IPetUseCase {
   weight: number | null
   height: number | null;
   age: number | null;
-  city: string;
   orgId: string;
 }
 
@@ -19,7 +18,7 @@ interface IPetUseCaseResponse {
 export class PetUseCase {
   constructor(private petsRepository: IPetsRepository) { }
 
-  async execute({ age, city, color, height, name, species, weight, orgId }: IPetUseCase): Promise<IPetUseCaseResponse> {
+  async execute({ age, color, height, name, species, weight, orgId }: IPetUseCase): Promise<IPetUseCaseResponse> {
 
     const pet = await this.petsRepository.create({
       name,
@@ -28,7 +27,6 @@ export class PetUseCase {
       weight,
       height,
       age,
-      city,
       org_id: orgId
     })
 
