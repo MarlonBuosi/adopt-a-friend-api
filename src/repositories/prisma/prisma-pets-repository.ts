@@ -22,13 +22,12 @@ export class PrismaPetsRepository implements IPetsRepository {
   async searchMany(searchParams: TSearchPets)  {
     const pets = await prisma.pet.findMany({
       where: { 
-        city: searchParams.city,
-        name: searchParams.name,
-        species: searchParams.species,
-        color: searchParams.color,
-        weight: searchParams.weight,
-        height: searchParams.height,
-        age: searchParams.age,
+        org:{
+          city: {
+            contains: searchParams.city, mode: 'insensitive'
+          },
+        },
+        ...searchParams
       }
     })
 

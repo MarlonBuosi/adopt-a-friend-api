@@ -19,7 +19,8 @@ describe('Profile (e2e)', () => {
       {
         name: 'Atila Org',
         phone: '11999999999',
-        password: '123456789'
+        password: '123456789',
+        city: 'Curitiba',
       })
     
     
@@ -28,16 +29,16 @@ describe('Profile (e2e)', () => {
         password: '123456789'
     })
 
-
     const profile = await request(app.server).get('/me').set({
       Authorization: `Bearer ${authResponse.body.token}`
     }).send()
 
     expect(profile.statusCode).toEqual(200)
-    expect(profile.body.orgWithoutPasswordHash).toEqual(expect.objectContaining({
+    expect(profile.body.organization).toEqual(expect.objectContaining({
       id: expect.any(String),
       name: 'Atila Org',
       phone: '11999999999',
+      city: 'Curitiba',
     }))
   })
 })
