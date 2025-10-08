@@ -1,14 +1,13 @@
 import { app } from "@/app";
-import { beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import request from 'supertest'
-import { after } from "node:test";
 
 describe('Authenticate (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
 
-  after(async () => {
+  afterAll(async () => {
     await app.close()
   })
 
