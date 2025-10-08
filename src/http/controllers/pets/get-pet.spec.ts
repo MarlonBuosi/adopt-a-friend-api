@@ -44,9 +44,7 @@ describe('Get pet (e2e)', () => {
         orgId: profile.body.organization.id
     })
 
-    const pet = await request(app.server).get(`/pets/${createdPet.body.pet.id}`).set({
-      Authorization: `Bearer ${authResponse.body.token}`
-    }).send()
+    const pet = await request(app.server).get(`/pets/${createdPet.body.pet.id}`).send()
 
     expect(pet.statusCode).toEqual(200)
     expect(pet.body.pet).toEqual(expect.objectContaining({

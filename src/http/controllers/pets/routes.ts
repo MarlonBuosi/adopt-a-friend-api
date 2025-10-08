@@ -6,9 +6,7 @@ import { getPet } from "./get-pet";
 
 
 export async function petsRoutes(app: FastifyInstance) {
-  app.addHook('onRequest', verifyJwt)
-
   app.post('/pets/search', search)
-  app.post('/pets', create)
+  app.post('/pets', { onRequest: [ verifyJwt ] }, create)
   app.get('/pets/:id', getPet)
 }
