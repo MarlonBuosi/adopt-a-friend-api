@@ -44,9 +44,7 @@ describe('Search (e2e)', () => {
         orgId: profile.body.organization.id
     })
 
-    const pets = await request(app.server).post('/pets/search').set({
-      Authorization: `Bearer ${authResponse.body.token}`
-    }).send({
+    const pets = await request(app.server).post('/pets/search').send({
       searchParams: {
         name: 'Atila',
         species: 'Pinscher',
