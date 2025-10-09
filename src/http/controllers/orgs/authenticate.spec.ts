@@ -1,37 +1,22 @@
 import { app } from "@/app";
-import { beforeAll, describe, expect, it } from "vitest";
-import request from 'supertest'
-import { after } from "node:test";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { authenticateOrg } from "../test/authenticate-org";
+import { createOrg } from "../test/create-org";
 
 describe('Authenticate (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
 
-  after(async () => {
+  afterAll(async () => {
     await app.close()
   })
 
   it('should be able to authenticate', async () => {
-    await request(app.server).post(
-      '/orgs'
-    ).send(
-      {
-        name: 'Atila Org',
-        phone: '11999999999',
-        password: '123456789',
-        city: 'Curitiba',
-      })
-    
-    
-    const response = await request(app.server).post('/sessions').send({
-        name: 'Atila Org',
-        password: '123456789'
-    })
+    await createOrg(app)
+    const { token, statusCode } = await authenticateOrg(app)
 
-    expect(response.statusCode).toEqual(200)
-    expect(response.body).toEqual({
-      token: expect.any(String)
-    })
+    expect(statusCode).toEqual(200)
+    expect(token).toEqual(expect.any(String))
   })
 })

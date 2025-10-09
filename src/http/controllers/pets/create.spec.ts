@@ -1,51 +1,28 @@
 import { app } from "@/app";
-import { beforeAll, describe, expect, it } from "vitest";
-import request from 'supertest'
-import { after } from "node:test";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { createOrg } from "../test/create-org";
+import { authenticateOrg } from "../test/authenticate-org";
+import { createPet } from "../test/create-pet";
+import { getOrgProfile } from "../test/get-org-profile";
 
 describe('Create (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
 
-  after(async () => {
+  afterAll(async () => {
     await app.close()
   })
 
   it('should be able to create a pet', async () => {
-    await request(app.server).post(
-      '/orgs'
-    ).send(
-      {
-        name: 'Atila Org',
-        phone: '11999999999',
-        password: '123456789',
-        city: 'Curitiba',
-      })
-    
-    const authResponse = await request(app.server).post('/sessions').send({
-        name: 'Atila Org',
-        password: '123456789'
-    })
 
-    const profile = await request(app.server).get('/me').set({
-      Authorization: `Bearer ${authResponse.body.token}`
-    }).send()
+    await createOrg(app)
+    const { token } = await authenticateOrg(app)
+    const { profile } = await getOrgProfile({app, token})
+    const { pet, statusCode } = await createPet({app, token, orgId: profile.organization.id})
     
-    const pet = await request(app.server).post('/pets').set({
-      Authorization: `Bearer ${authResponse.body.token}`
-    }).send({
-        name: 'Atila',
-        species: 'Pinscher',
-        color: 'Pretin',
-        age: 8,
-        weight: 5,
-        height: 30,
-        orgId: profile.body.organization.id
-    })
-    
-    expect(pet.statusCode).toEqual(201)
-    expect(pet.body.pet).toEqual(expect.objectContaining({
+    expect(statusCode).toEqual(201)
+    expect(pet.pet).toEqual(expect.objectContaining({
       id: expect.any(String),
       name: 'Atila',
       species: 'Pinscher',
