@@ -10,6 +10,7 @@ export async function authenticateOrg(app: FastifyInstance) {
 
   const { token } = authResponse.body
   const { statusCode } = authResponse
+  const cookies  = authResponse.get('Set-Cookie')
 
-  return { token, statusCode }
+  return { token, statusCode, cookies }
 }

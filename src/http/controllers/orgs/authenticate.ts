@@ -15,9 +15,17 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
     const authenticationUseCase = makeAuthenticateUseCase();
 
     const { org } = await authenticationUseCase.execute({ name, password });
+    
     const token = await reply.jwtSign({}, {sign: {sub: org.id}})
 
-    return reply.status(200).send({
+    const refreshToken = await reply.jwtSign({}, {sign: {sub: org.id, expiresIn: '7d'}})
+
+    return reply.setCookie('refreshToken', refreshToken, {
+        path: '/',
+        secure: true,
+        sameSite: true,
+        httpOnly: true,
+      }).status(200).send({
       token
     });
 
