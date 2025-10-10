@@ -17,7 +17,10 @@ describe('Register Use Case', () => {
     const { org } = await sut.execute({
       name: 'Test Org',
       phone: '1234567890',
-      password: 'password123'
+      password: 'password123',
+      address: '123 Main St',
+      city: 'Test City',
+      role: 'ADMIN'
     })
 
     const isPasswordCorrectlyHashed = await compare('password123', org.password_hash);
@@ -29,14 +32,20 @@ describe('Register Use Case', () => {
     await sut.execute({
       name: 'Test Org',
       phone: '1234567890',
-      password: 'password123'
+      password: 'password123',
+      address: '123 Main St',
+      city: 'Test City',
+      role: 'ADMIN'
     })
 
     await expect(() => {
       return sut.execute({
         name: 'Test Org',
         phone: '0987654321',
-        password: 'newpassword123'
+        password: 'newpassword123',
+        address: '123 Main St',
+        city: 'Test City',
+        role: 'ADMIN'
       })
     }).rejects.toThrow('Organization already exists');
   })
@@ -46,7 +55,10 @@ describe('Register Use Case', () => {
     const { org } = await sut.execute({
       name: 'New Org',
       phone: '1234567890',
-      password: 'newpassword123'
+      password: 'newpassword123',
+      address: '123 Main St',
+      city: 'Test City',
+      role: 'ADMIN'
     });
 
     expect(org.id).toEqual(expect.any(String));

@@ -14,7 +14,6 @@ export class InMemoryPetsRepository implements IPetsRepository {
       weight: data.weight ?? null,
       height: data.height ?? null,
       age: data.age ?? null,
-      city: data.city,
       org_id: data.org_id,
       created_at: new Date(),
       updated_at: new Date(),

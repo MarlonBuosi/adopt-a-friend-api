@@ -9,14 +9,16 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
     phone: z.string(),
     password: z.string().min(6),
     city: z.string(),
+    address: z.string(),
+    role: z.enum(["ADMIN", "MEMBER", "GUEST"]).optional()
   })
 
-  const { name, phone, password, city} = registerBodySchema.parse(request.body);
+  const { name, phone, password, city, address, role } = registerBodySchema.parse(request.body);
 
   try {
     const registerUseCase = makeRegisterUseCase();
 
-    await registerUseCase.execute({ name, phone, password, city });
+    await registerUseCase.execute({ name, phone, password, city, address, role });
   } catch (err) {
     if (err instanceof OrgAlreadyExistsError) {
       return reply.status(409).send();

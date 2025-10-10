@@ -13,6 +13,9 @@ export class InMemoryOrgsRepository implements IOrgsRepository {
       password_hash: data.password_hash,
       created_at: new Date(),
       updated_at: new Date(),
+      address: data.address,
+      city: data.city,
+      role: data.role ?? 'GUEST'
     }
 
     this.items.push(org);
