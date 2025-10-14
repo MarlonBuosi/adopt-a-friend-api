@@ -26,6 +26,7 @@ model Org {
   updated_at    DateTime @updatedAt
   role          Role     @default(GUEST)
   phone         String
+  address       String
   password_hash String
   city          String
   pets          Pet[]

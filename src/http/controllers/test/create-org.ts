@@ -8,6 +8,8 @@ export async function createOrg(app: FastifyInstance) {
     phone: '11999999999',
     password: '123456789',
     city: 'Curitiba',
+    address: 'Rua Atila, 100',
+    role: 'MEMBER'
   })
 
   const org = response.body
