@@ -20,6 +20,8 @@ describe('Register (e2e)', () => {
         phone: '11999999999',
         password: '123456789',
         city: 'Curitiba',
+        address: 'Rua Atila, 100',
+        role: 'ADMIN'
       }
     )
 

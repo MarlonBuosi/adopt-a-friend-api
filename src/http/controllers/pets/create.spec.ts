@@ -19,7 +19,8 @@ describe('Create (e2e)', () => {
     await createOrg(app)
     const { token } = await authenticateOrg(app)
     const { profile } = await getOrgProfile({app, token})
-    const { pet, statusCode } = await createPet({app, token, orgId: profile.organization.id})
+
+    const { pet, statusCode } = await createPet({ app, token, orgId: profile.organization.id })
     
     expect(statusCode).toEqual(201)
     expect(pet.pet).toEqual(expect.objectContaining({

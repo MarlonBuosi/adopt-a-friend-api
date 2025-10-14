@@ -7,8 +7,7 @@ export function verifyUserRole(roleToVerify: Role[]) {
     const { role } = request.user
 
     const hasRole = roleToVerify.some(r => r === role)
-
-    if (hasRole) {
+    if (!hasRole) {
       return reply.status(401).send({ message: 'Unauthorized'})
     }
   }
