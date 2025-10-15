@@ -27,6 +27,9 @@ jobs:
 
       - run: npm ci
 
+      - run: echo "USER=${{ secrets.POSTGRES_USER }}, DB=${{ secrets.POSTGRES_DB }}"
+        # Opcional: remova depois de testar, pois secrets podem aparecer nos logs!
+
       - run: npm run test:e2e
         env:
           JWT_SECRET: testing
