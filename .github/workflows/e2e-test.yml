@@ -32,5 +32,7 @@ jobs:
 
       - run: npm run test:e2e
         env:
-          JWT_SECRET: testing
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           DATABASE_URL: postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}?schema=public
+          DATABASE_USERNAME: ${{ secrets.POSTGRES_USER }}
+          DATABASE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
